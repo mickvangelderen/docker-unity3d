@@ -1,8 +1,10 @@
-FROM ubuntu:latest
+FROM ubuntu:devel
 
 RUN apt-get update \
-    && apt-get install --yes curl \
+    && apt-get install --fix-broken --yes \
+        curl \
     && curl --output "/tmp/unity.deb" "http://beta.unity3d.com/download/061bcf22327f/unity-editor_amd64-2017.1.0xf3Linux.deb" \
-    && apt-get install --yes "/tmp/unity.deb" \
+    && dpkg --install --force-depends "/tmp/unity.deb" \
+    && apt-get install --fix-broken --yes \
     && rm "/tmp/unity.deb"
 
